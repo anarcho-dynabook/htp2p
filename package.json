@@ -7,8 +7,7 @@
   "scripts": {
     "start": "node example/serve.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Remilia Darknets",
   "license": "ISC",
   "dependencies": {
     "@chainsafe/libp2p-noise": "^17.0.0",
