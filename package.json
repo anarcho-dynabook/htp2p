@@ -1,12 +1,11 @@
 {
   "name": "htp2p",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Hypertext on P2P connection",
   "type": "module",
+  "main": "example/serve.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node example/serve.js"
   },
   "keywords": [],
   "author": "",
