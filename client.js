@@ -1,6 +1,8 @@
 import { createLibp2p } from "libp2p";
+import { lpStream } from "@libp2p/utils";
 import { tcp } from "@libp2p/tcp";
 import { mplex } from "@libp2p/mplex";
+import { toString } from "uint8arrays/to-string";
 import { noise } from "@chainsafe/libp2p-noise";
 import { multiaddr } from "@multiformats/multiaddr";
 
@@ -15,24 +17,21 @@ async function startClient(peerAddr) {
   });
 
   await node.start();
-  console.log("Client started with Peer ID:", node.peerId.toString());
-  // Dial the server peer
   const ma = multiaddr(peerAddr);
-  const { readBuffer } = await node.dialProtocol(ma, PROTOCOL);
+  const lp = lpStream(await node.dialProtocol(ma, PROTOCOL));
 
-  // Read data from stream
-  const chunks = [];
-  for await (const chunk of readBuffer) {
-    chunks.push(chunk);
-  }
-  const fileData = Buffer.concat(chunks);
-
-  console.log("Received content:\n", fileData.toString());
+  Promise.resolve().then(async () => {
+    while (true) {
+      const message = await lp.read();
+      const text = toString(message.subarray()).replaceAll("\n", " ");
+      console.log(`[${new Date().toISOString()}] ${text}`);
+    }
+  });
 }
 
 const peerAddr = process.argv[2];
 if (!peerAddr) {
-  console.error("Please provide the server multiaddr with Peer ID.");
+  console.error("[ERROR] Server multiaddr is not provided");
   process.exit(1);
 }
 
