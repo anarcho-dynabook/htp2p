@@ -1,6 +1,6 @@
 {
   "name": "htp2p",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Hypertext on P2P connection",
   "type": "module",
   "main": "example/serve.js",
@@ -8,7 +8,6 @@
     "start": "node example/serve.js"
   },
   "author": "Remilia Darknets",
-  "license": "ISC",
   "dependencies": {
     "@chainsafe/libp2p-noise": "^17.0.0",
     "@libp2p/mplex": "^12.0.5",
