@@ -46,9 +46,11 @@ export const Htp2p = {
     node.getMultiaddrs().forEach((addr) => console.log(" -", addr.toString()));
   },
 
-  get: async function (peerAddr, path) {
+  get: async function (uri) {
     const node = await createLibp2p(CONFIG);
     await node.start();
+
+    const [peerAddr, path] = uri.split("@");
 
     const ma = multiaddr(peerAddr);
     const lp = lpStream(await node.dialProtocol(ma, PROTOCOL));
